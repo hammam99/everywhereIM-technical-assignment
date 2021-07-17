@@ -42,6 +42,10 @@ class User extends Authenticatable
     // ];
     public function colors()
     {
-        return $this->hasMany(UserColor::class);
+        $colors = $this->hasMany(UserColor::class)->join('colors', function($join) {
+            $join->on('user_colors.color_id', 'colors.id');
+        });
+
+        return $colors;
     }
 }

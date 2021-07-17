@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Models\User;
+use App\Models\Color;
 
 class UserController extends Controller
 {
@@ -15,8 +16,18 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
-        return User::all();
+        $users = User::with('colors')->get();
+        $new = $users->mapWithKeys(function ($item) {
+            // echo $item;
+            return [$item['id']-1 => [
+                'id' => $item['id'],
+                'colors' => $item['colors']->map( function ($c) {
+                return $c['color'];
+                })
+            ]];
+        });
+        $new->all();
+        return response($new);//->json($new);
     }
 
     /**
