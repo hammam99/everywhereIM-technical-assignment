@@ -15,7 +15,7 @@ export class Tab2Page {
   }
 
   ngOnInit() {
-    // Getting users data after navigating to this page.
+    // Getting users data on NavigationEnd event of this page, thus keeping data up to date.
     this.router.events.subscribe((ev: RouterEvent) => {
       if (ev instanceof NavigationEnd && ev.url == '/app/tabs/tab2') {
         this.userService.fetchUsers()
@@ -47,13 +47,14 @@ export class Tab2Page {
     this.users[i].colors = this.shuffleArray(this.users[i].colors);
   }
 
-  // Shuffle an array using the Fisher-Yart algorithm.
+  // Shuffle an array using the Fisher-Yates algorithm.
+  // Source:
+  // https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle#The_modern_algorithm
   shuffleArray(array: any[]) {
     // the array needs to be cloned to avoid triggering angular hooks.
-    let arr = array.map(obj => obj);
-    let tmp, j;
+    let tmp, j, arr = array.map(obj => obj);
     for (let i = arr.length - 1; i > 0; i--) {
-      j = Math.floor(Math.random() * (i));
+      j = Math.floor(Math.random() * i);
       tmp = arr[i];
       arr[i] = arr[j];
       arr[j] = tmp;
