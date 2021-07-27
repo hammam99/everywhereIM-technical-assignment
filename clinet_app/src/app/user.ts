@@ -1,4 +1,6 @@
+import { Color } from "./color";
+
 export class User {
     id: string;
-    colors: string[];
+    colors: Color[];
 }

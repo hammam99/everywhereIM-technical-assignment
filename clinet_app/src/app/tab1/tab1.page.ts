@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
+import { NavigationEnd, Router, RouterEvent } from '@angular/router';
 import { User } from '../user';
 import { UserService } from '../user.service';
 
@@ -8,36 +9,22 @@ import { UserService } from '../user.service';
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page {
-  // @Input() user: User;
-  private users: User[];
+  private colors: string[];
+  constructor(private userService: UserService, private router: Router) {}
 
-  constructor(private userService: UserService) {}
-
-  ngOnInit() {
-    // this.users.forEach(x => console.log(x));
-    // if (this.users.length == 0)
-    //   console.log('fff');
-    // this.getUsers();
-    // console.log('ff');
-    this.userService.getUsers()
-    .subscribe((data: User[]) => {
-      // console.log('dddddded');
-      this.users = data;
+async ngOnInit() {
+    this.userService.getColors().then(x => {
+      x.subscribe(
+        (data: string[]) => {
+          this.colors = data;
+        },
+        err => {
+          console.log(err);
+        }
+      );
     },
     err => {
       console.log(err);
-    })
+    });
   }
-
-  getUsers() {
-    this.userService.getUsers()
-    .subscribe((data: any) => {
-      console.log('dddddded');
-      this.users = data;
-    },
-    err => {
-      console.log(err);
-    })
-  }
-
 }

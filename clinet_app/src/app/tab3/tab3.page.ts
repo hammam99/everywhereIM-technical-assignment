@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-tab3',
@@ -7,6 +9,10 @@ import { Component } from '@angular/core';
 })
 export class Tab3Page {
 
-  constructor() {}
+  constructor(private userService: UserService, private router: Router, private route: ActivatedRoute) {}
 
+  async delete() {
+    await this.userService.deleteUser();
+    this.router.navigate(["/signup"], {relativeTo: this.route});
+  }
 }

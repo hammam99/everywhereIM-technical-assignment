@@ -1,17 +1,20 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Tab 2
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <app-explore-container name="Tab 2 page"></app-explore-container>
+  <div *ngIf="users" class="user-container">
+    <h2>Gebruikers: </h2>
+    <br>
+    <div *ngFor="let user of users">
+      <div class="user-item">
+        <div class="user-id">{{user.id}}.</div>
+        <div class="color-block" *ngIf="user.colors[0]" [ngStyle]="{'background': user.colors[0].color}"></div>
+        <ion-icon *ngIf="user.colors?.length > 1" class="toggle-list" name="chevron-up-outline"
+          (click)="toggleDropdown($event)"></ion-icon>
+        <ion-icon *ngIf="user.colors?.length > 1" class="shuffle-btn ion-hide" name="shuffle-outline"
+          (click)="shuffleColors(user.id)"></ion-icon>
+      </div>
+      <div class="colors-list ion-hide">
+        <div *ngFor="let color of user.colors | slice:1" class="color-block" [ngStyle]="{'background': color.color}">
+        </div>
+      </div>
+    </div>
+  </div>
 </ion-content>

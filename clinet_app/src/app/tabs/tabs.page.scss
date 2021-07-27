@@ -1,1 +1,11 @@
+ion-icon {
+    color: var(--ion-color-everywhere);
+}
 
+.logo {
+    top: 20%;
+    right: 50%;
+    transform: translateX(50%);
+    position: fixed;
+    z-index: 2;
+}

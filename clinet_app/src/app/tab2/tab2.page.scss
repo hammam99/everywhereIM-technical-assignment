@@ -1,0 +1,30 @@
+.user-container {
+    margin: 70% 50px 0;
+    border-top: 1px solid;
+    padding: 20px;
+}
+
+.user-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.user-id {
+    width: 30px;
+}
+
+.color-block {
+    height: 30px;
+    width: 30px;
+}
+
+.colors-list>.color-block {
+    margin: 10px 0 10px 30px;
+}
+
+.toggle-list {
+
+    margin-left: auto;
+    margin-right: 30px;
+}
