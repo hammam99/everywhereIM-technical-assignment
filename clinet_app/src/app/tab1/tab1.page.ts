@@ -1,6 +1,5 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { NavigationEnd, Router, RouterEvent } from '@angular/router';
-import { User } from '../user';
 import { UserService } from '../user.service';
 
 @Component({
@@ -13,18 +12,22 @@ export class Tab1Page {
   constructor(private userService: UserService, private router: Router) {}
 
 async ngOnInit() {
-    this.userService.getColors().then(x => {
-      x.subscribe(
-        (data: string[]) => {
-          this.colors = data;
+    this.router.events.subscribe((ev: RouterEvent) => {
+      if (ev instanceof NavigationEnd && ev.url == '/app/tabs/tab1') {
+        this.userService.getColors().then(x => {
+          x.subscribe(
+            (data: string[]) => {
+              this.colors = data;
+            },
+            err => {
+              console.log(err);
+            }
+          );
         },
-        err => {
-          console.log(err);
-        }
-      );
-    },
-    err => {
-      console.log(err);
+          err => {
+            console.log(err);
+          });
+      }
     });
   }
 }
