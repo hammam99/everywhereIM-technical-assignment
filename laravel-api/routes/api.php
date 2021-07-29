@@ -17,17 +17,27 @@ use App\Http\Controllers\UserController;
 |
 */
 
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
 
-//The api will a sign a user with a new uuid
 Route::get('/colors', function (Request $request) {
     return Color::all();
 });
 
-Route::get('/users', function (Request $request) {
-    return User::with('colors')->get();
+function getUsers() {
+    $users = User::with('colors')->get();
+    $new = $users->mapWithKeys(function ($item, $i) {
+        return [$i => [
+            'id' => $item['id'],
+            'colors' => $item['colors']->map(function ($c) {
+                return ['id' => $c['color_id'], 'color' => $c['color']];
+            })
+        ]];
+    });
+    return $new->all();
+}
+
+// TODO: improve remove maps
+Route::get('/user', function (Request $request) {
+    return response(getUsers());
 });
 
 Route::get('/user/signup', function (Request $request) {
@@ -36,12 +46,33 @@ Route::get('/user/signup', function (Request $request) {
     return response($user->id);
 });
 
-Route::get('/user/{id}/addcolor/{color_id}', function (Request $request) {
-    $row = new UserColor;
-    $row->user_id = $request->id;
-    $row->color_id = $request->color_id;
-    $row->save();
-    return $row->id;
+Route::get('/user/{id}/colors', function (Request $request) {
+    $user = UserColor::where('user_id', $request->id)->join('colors', function($join) {
+        $join->on('color_id', 'colors.id');
+    })->get()->pluck('color');
+    return response($user);
 });
 
-Route::resource('user', UserController::class);
+Route::delete('/user/{id}', function (Request $request) {
+    return User::where('id', $request->id)->delete();
+});
+
+Route::delete('/user/{id}/color/{color_id}', function (Request $request) {
+    return UserColor::where('user_id', $request->id)->where('color_id', $request->color_id)->delete();
+});
+
+Route::put('/user/{id}/color/{color_id}', function (Request $request) {
+    // Change color
+    if (($new_id = $request->query('replaceWith'))) {
+        return UserColor::where('user_id', $request->id)
+            ->where('color_id', $request->color_id)
+            ->update(['color_id' => $new_id]);
+    // Add new color
+    } else {
+        $row = new UserColor;
+        $row->user_id = $request->id;
+        $row->color_id = $request->color_id;
+        $row->save();
+        return $row->id;
+    }
+});

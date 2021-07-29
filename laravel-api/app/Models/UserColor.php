@@ -17,16 +17,5 @@ class UserColor extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
-    
-    public function color()
-    {
-        return $this->belongsTo(Color::class, 'color_id')->join('colors', function($join) {
-            $join->on('color_id', 'colors.id');
-        });
-    }
-    // public function user()
-    // {
-    //     return $this->belongsTo('App\Models\User');
-    // }
 
 }

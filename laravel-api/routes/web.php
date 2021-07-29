@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Models\User;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,4 +15,22 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+
+// function getUsers() {
+//     $users = User::with('colors')->get();
+//     $new = $users->mapWithKeys(function ($item, $i) {
+//         return [$i => [
+//             'id' => $item['id'],
+//             'colors' => $item['colors']->map(function ($c) {
+//                 return ['id' => $c['color_id'], 'color' => $c['color']];
+//             })
+//         ]];
+//     });
+//     return $new->all();
+// }
+
+Route::get('/admin', function () {
+    return view('admin')->with('users', getUsers());
 });

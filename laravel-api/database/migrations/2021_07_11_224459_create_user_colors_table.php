@@ -18,7 +18,7 @@ class CreateUserColorsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('color_id');
 
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('color_id')->references('id')->on('colors');
         });
     }
