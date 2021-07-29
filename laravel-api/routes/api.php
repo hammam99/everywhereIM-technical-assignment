@@ -60,10 +60,11 @@ Route::delete('/user/{id}/color/{color_id}', function (Request $request) {
 });
 
 Route::put('/user/{id}/color/{color_id}', function (Request $request) {
-    // Change color
+    // Change only one color
     if (($new_id = $request->query('replaceWith'))) {
         return UserColor::where('user_id', $request->id)
             ->where('color_id', $request->color_id)
+            ->take(1)
             ->update(['color_id' => $new_id]);
     // Add new color
     } else {
