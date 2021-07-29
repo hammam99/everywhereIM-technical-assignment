@@ -5,7 +5,6 @@ use Illuminate\Support\Facades\Route;
 use App\Models\Color;
 use App\Models\UserColor;
 use App\Models\User;
-use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -35,7 +34,6 @@ function getUsers() {
     return $new->all();
 }
 
-// TODO: improve remove maps
 Route::get('/user', function (Request $request) {
     return response(getUsers());
 });

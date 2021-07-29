@@ -1,0 +1,71 @@
+html, body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.users-container {
+    border-top: 1px solid;
+    overflow: scroll;
+    width: calc(30vw);
+    height: calc(50vh);
+}
+
+.user-item {
+    display: flex;
+    align-items: center;
+    min-height: 40px;
+    width: 100%;
+}
+
+.user-id {
+    width: 40px;
+    justify-self: flex-start;
+}
+
+.toggle-list, .add-color {
+    width: 20px;
+    margin: 0 10px;
+}
+
+.add-color {
+}
+
+.push {
+    margin-left: auto;
+}
+
+.color-block {
+    height: 50px;
+    width: 50px;
+    margin-bottom: 10px;
+}
+
+.colors-list {
+    display: none;
+}
+
+.colors-list > .color-block {
+    margin-left: 40px;
+}
+
+#color-picker {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    visibility: hidden;
+}
+
+.color-square {
+    height: 50%;
+    width: 50%;
+}
+
+#trash {
+    position: fixed;
+    height: 15%;
+    visibility: hidden;
+}
