@@ -16,11 +16,6 @@ use App\Models\User;
 |
 */
 
-
-Route::get('/colors', function (Request $request) {
-    return Color::all();
-});
-
 function getUsers() {
     $users = User::with('colors')->get();
     $new = $users->mapWithKeys(function ($item, $i) {
