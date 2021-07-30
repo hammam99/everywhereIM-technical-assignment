@@ -1,7 +1,12 @@
 #logo {
-    // display: flex;
-    margin-top: 100px;
+    top: 20%;
+    right: 50%;
+    transform: translateX(50%);
+    position: fixed;
 }
-#btn {
-    margin-top: 50%;
+#signup {
+    top: 50%;
+    right: 50%;
+    transform: translateX(50%);
+    position: fixed;
 }
